@@ -2,17 +2,30 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  base: "/",
   server: {
     port: 5173,
     strictPort: false,
-    // Proxy ALL /api calls to the backend — eliminates CORS completely
     proxy: {
       "/api": {
         target: "http://localhost:5000",
         changeOrigin: true,
         secure: false,
-        rewrite: (p) => p, // keep path as-is
+      },
+    },
+  },
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom", "react-router-dom"],
+          charts: ["recharts"],
+          motion: ["framer-motion"],
+        },
       },
     },
   },
@@ -30,4 +43,4 @@ export default defineConfig({
       "@tanstack/query-core",
     ],
   },
-});
+}));

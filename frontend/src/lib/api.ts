@@ -1,7 +1,10 @@
 // ─── Central API Client ───────────────────────────────────────────────────────
-// Uses Vite proxy: /api → http://localhost:5000/api (no CORS issues)
+// In dev: Vite proxy forwards /api → http://localhost:5000/api
+// In prod: uses VITE_API_URL env variable set in Render
 
-const BASE_URL = "/api";
+const BASE_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : "/api";
 
 function getToken(): string | null {
   return localStorage.getItem("cogtwin_token");
