@@ -3,9 +3,6 @@
 > A web-based AI system that creates a personalized Digital Twin of your cognitive behavior using brain games, machine learning, and Groq LLM.
 
 ---
-
-## 📋 Table of Contents
-
 1. [Project Overview](#-project-overview)
 2. [Key Features](#-key-features)
 3. [System Architecture](#-system-architecture)
