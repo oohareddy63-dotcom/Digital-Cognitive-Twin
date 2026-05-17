@@ -20,8 +20,9 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   };
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
+  // 30-second timeout — Render free tier can take ~30s to wake up
   const controller = new AbortController();
-  const timeoutId  = setTimeout(() => controller.abort(), 15000);
+  const timeoutId  = setTimeout(() => controller.abort(), 30000);
 
   try {
     const res = await fetch(`${BASE_URL}${path}`, { ...options, headers, signal: controller.signal });
@@ -37,9 +38,9 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     clearTimeout(timeoutId);
     if (err instanceof Error) {
       if (err.name === "AbortError")
-        throw new Error("Request timed out. Is the backend running on port 5000?");
-      if (err.message.includes("Failed to fetch"))
-        throw new Error("Cannot connect to server. Start the backend: cd backend && node server.js");
+        throw new Error("Server is starting up. Please wait 30 seconds and try again.");
+      if (err.message.includes("Failed to fetch") || err.message.includes("NetworkError"))
+        throw new Error("Server is starting up. Please wait 30 seconds and try again.");
       throw err;
     }
     throw new Error("Unknown error");

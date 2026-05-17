@@ -1,10 +1,9 @@
-const express  = require("express");
-const mongoose = require("mongoose");
-const cors     = require("cors");
+const express   = require("express");
+const mongoose  = require("mongoose");
+const cors      = require("cors");
 const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 
-// ─── Route imports ────────────────────────────────────────────────────────────
 const authRoutes      = require("./routes/auth");
 const testRoutes      = require("./routes/tests");
 const dashboardRoutes = require("./routes/dashboard");
@@ -17,20 +16,16 @@ const { startScheduler }      = require("./scheduler");
 
 const app = express();
 
-// ─── CORS ─────────────────────────────────────────────────────────────────────
+// ─── CORS — allow ALL origins (required for Render free tier) ─────────────────
 app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin) return cb(null, true);
-    // Allow any localhost port (dev)
-    if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) return cb(null, true);
-    // Allow any onrender.com subdomain (production)
-    if (/^https:\/\/.*\.onrender\.com$/.test(origin)) return cb(null, true);
-    cb(new Error("CORS blocked: " + origin));
-  },
+  origin: true,          // reflect the request origin — allows everything
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
+// Handle preflight for all routes
+app.options("*", cors());
 
 app.use(express.json({ limit: "10mb" }));
 
@@ -53,22 +48,12 @@ app.use("/api/ai",            aiRoutes);
 app.use("/api/reminders",     reminderRoutes);
 app.use("/api/notifications", notifRoutes);
 
-// Root — friendly info page
+// Root
 app.get("/", (_req, res) => {
   res.json({
     message: "CogTwin API ✅",
-    frontend: "http://localhost:5173",
-    endpoints: {
-      auth:          "/api/auth/register | /api/auth/login | /api/auth/me",
-      tests:         "/api/tests/submit  | /api/tests/history | /api/tests/sessions",
-      dashboard:     "/api/dashboard",
-      profile:       "/api/profile | /api/profile/reports",
-      ml:            "/api/ml/twin | /api/ml/train | /api/ml/analyze | /api/ml/predict",
-      ai:            "/api/ai/insights | /api/ai/recommendations | /api/ai/ask",
-      reminders:     "/api/reminders/settings | /api/reminders/status | /api/reminders/test",
-      notifications: "/api/notifications",
-      health:        "/api/health",
-    },
+    status: "running",
+    health: "/api/health",
   });
 });
 
@@ -92,7 +77,7 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500).json({ error: err.message || "Internal server error" });
 });
 
-// ─── Connect DB → Start server ────────────────────────────────────────────────
+// ─── Start ────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 
 mongoose
@@ -104,10 +89,8 @@ mongoose
   .then(() => {
     console.log("✅ MongoDB Atlas connected");
     app.listen(PORT, () => {
-      console.log(`🚀 Backend      →  http://localhost:${PORT}`);
-      console.log(`🧠 ML Engine    →  TensorFlow.js + simple-statistics + mathjs`);
-      console.log(`🤖 Groq AI      →  llama-3.1-8b-instant`);
-      console.log(`📡 Health check →  http://localhost:${PORT}/api/health`);
+      console.log(`🚀 Backend  →  http://localhost:${PORT}`);
+      console.log(`📡 Health   →  http://localhost:${PORT}/api/health`);
       startScheduler();
     });
   })
