@@ -6,7 +6,7 @@ const BASE_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
   : import.meta.env.DEV
   ? "/api"
-  : "https://cogtwin-backend.onrender.com/api";
+  : "https://digital-cognitive-twin.onrender.com/api";
 
 function getToken(): string | null {
   return localStorage.getItem("cogtwin_token");
