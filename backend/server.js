@@ -53,7 +53,9 @@ app.get("/", (_req, res) => {
   res.json({
     message: "CogTwin API ✅",
     status: "running",
+    frontend: "https://digital-cognitive-twin-1.onrender.com",
     health: "/api/health",
+    cors: "all origins allowed",
   });
 });
 
