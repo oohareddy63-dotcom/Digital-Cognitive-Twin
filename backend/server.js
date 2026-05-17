@@ -21,7 +21,10 @@ const app = express();
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin) return cb(null, true);
+    // Allow any localhost port (dev)
     if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) return cb(null, true);
+    // Allow any onrender.com subdomain (production)
+    if (/^https:\/\/.*\.onrender\.com$/.test(origin)) return cb(null, true);
     cb(new Error("CORS blocked: " + origin));
   },
   credentials: true,

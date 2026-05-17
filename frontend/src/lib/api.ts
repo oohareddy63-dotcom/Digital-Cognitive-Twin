@@ -1,10 +1,12 @@
 // ─── Central API Client ───────────────────────────────────────────────────────
 // In dev: Vite proxy forwards /api → http://localhost:5000/api
-// In prod: uses VITE_API_URL env variable set in Render
+// In prod: direct call to Render backend
 
 const BASE_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
-  : "/api";
+  : import.meta.env.DEV
+  ? "/api"
+  : "https://cogtwin-backend.onrender.com/api";
 
 function getToken(): string | null {
   return localStorage.getItem("cogtwin_token");
