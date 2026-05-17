@@ -16,15 +16,16 @@ const { startScheduler }      = require("./scheduler");
 
 const app = express();
 
-// ─── CORS — allow ALL origins (required for Render free tier) ─────────────────
+// ─── Trust Render's proxy (required for rate limiting on Render) ──────────────
+app.set("trust proxy", 1);
+
+// ─── CORS — allow ALL origins ─────────────────────────────────────────────────
 app.use(cors({
-  origin: true,          // reflect the request origin — allows everything
+  origin: true,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
-
-// Handle preflight for all routes
 app.options("*", cors());
 
 app.use(express.json({ limit: "10mb" }));
