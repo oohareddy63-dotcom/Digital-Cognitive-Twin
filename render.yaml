@@ -1,7 +1,7 @@
 services:
   # ─── Backend Web Service ───────────────────────────────────────────────────
   - type: web
-    name: cogtwin-backend
+    name: digital-cognitive-twin
     runtime: node
     rootDir: backend
     buildCommand: npm install
@@ -13,20 +13,19 @@ services:
         value: 5000
       - key: JWT_EXPIRES_IN
         value: 7d
-      # Set these in Render dashboard (secrets):
+      # Add these in Render dashboard manually (secrets):
       # MONGODB_URI, JWT_SECRET, GROQ_API_KEY, FRONTEND_URL
 
   # ─── Frontend Static Site ──────────────────────────────────────────────────
   - type: web
-    name: cogtwin-frontend
+    name: digital-cognitive-twin-1
     runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
-    headers:
-      - path: /*
-        name: Cache-Control
-        value: no-cache
+    envVars:
+      - key: VITE_API_URL
+        value: https://digital-cognitive-twin.onrender.com
     routes:
       - type: rewrite
         source: /*

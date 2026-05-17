@@ -1,6 +1,6 @@
 // ─── Central API Client ───────────────────────────────────────────────────────
-// In dev: Vite proxy forwards /api → http://localhost:5000/api
-// In prod: direct call to Render backend
+// Dev:  Vite proxy → /api → http://localhost:5000/api
+// Prod: VITE_API_URL is injected by Render at build time
 
 const BASE_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`

@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
-export default defineConfig(({ command }) => ({
+export default defineConfig({
   base: "/",
   server: {
     port: 5173,
@@ -17,8 +17,7 @@ export default defineConfig(({ command }) => ({
   },
   build: {
     outDir: "dist",
-    assetsDir: "assets",
-    sourcemap: false,
+    emptyOutDir: true,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -43,4 +42,4 @@ export default defineConfig(({ command }) => ({
       "@tanstack/query-core",
     ],
   },
-}));
+});
