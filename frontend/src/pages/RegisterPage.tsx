@@ -10,15 +10,26 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
     setLoading(true);
-    await register(name, email, password);
-    setLoading(false);
-    navigate("/dashboard");
+    setError(null);
+    try {
+      await register(name, email, password);
+      navigate("/dashboard");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Registration failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -38,6 +49,12 @@ const RegisterPage = () => {
           <h1 className="text-2xl font-bold text-foreground">Create Account</h1>
           <p className="text-sm text-muted-foreground">Start monitoring your cognitive health</p>
         </div>
+
+        {error && (
+          <div className="p-3 rounded-xl border border-red-500/30 bg-red-500/10 text-sm text-red-400">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -71,7 +88,7 @@ const RegisterPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm pr-10"
-                placeholder="••••••••"
+                placeholder="Min. 6 characters"
               />
               <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                 {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}

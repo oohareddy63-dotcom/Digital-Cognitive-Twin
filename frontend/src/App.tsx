@@ -13,6 +13,8 @@ import CognitiveTestsPage from "@/pages/CognitiveTestsPage";
 import ReportsPage from "@/pages/ReportsPage";
 import ProfilePage from "@/pages/ProfilePage";
 import SettingsPage from "@/pages/SettingsPage";
+import DigitalTwinPage from "@/pages/DigitalTwinPage";
+import AIChatPage from "@/pages/AIChatPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,7 +36,9 @@ const App = () => (
             <Route path="/reports" element={<ReportsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/settings" element={<SettingsPage />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/twin"    element={<DigitalTwinPage />} />
+            <Route path="/ai-chat" element={<AIChatPage />} />
+            <Route path="*"        element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

@@ -9,15 +9,22 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await login(email, password);
-    setLoading(false);
-    navigate("/dashboard");
+    setError(null);
+    try {
+      await login(email, password);
+      navigate("/dashboard");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -37,6 +44,12 @@ const LoginPage = () => {
           <h1 className="text-2xl font-bold text-foreground">Welcome Back</h1>
           <p className="text-sm text-muted-foreground">Sign in to your CogTwin account</p>
         </div>
+
+        {error && (
+          <div className="p-3 rounded-xl border border-red-500/30 bg-red-500/10 text-sm text-red-400">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
