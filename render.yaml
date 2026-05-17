@@ -1,0 +1,33 @@
+services:
+  # ─── Backend Web Service ───────────────────────────────────────────────────
+  - type: web
+    name: cogtwin-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      # Set these in Render dashboard (secrets):
+      # MONGODB_URI, JWT_SECRET, GROQ_API_KEY, FRONTEND_URL
+
+  # ─── Frontend Static Site ──────────────────────────────────────────────────
+  - type: web
+    name: cogtwin-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
