@@ -28,6 +28,7 @@ const sessionSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    
     isComplete: {
       type: Boolean,
       default: false,
