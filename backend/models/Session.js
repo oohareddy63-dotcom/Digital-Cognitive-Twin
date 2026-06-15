@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 // A session = one full round of all 5 tests
 const sessionSchema = new mongoose.Schema(
   {
