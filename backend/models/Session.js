@@ -13,7 +13,6 @@ const sessionSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    
     scores: {
       memory: { type: Number, default: null },
       reaction: { type: Number, default: null },
@@ -25,11 +24,11 @@ const sessionSchema = new mongoose.Schema(
       type: Number,
       default: null,
     },
+    
     testsCompleted: {
       type: Number,
       default: 0,
     },
-    
     isComplete: {
       type: Boolean,
       default: false,
