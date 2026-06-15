@@ -8,7 +8,6 @@ const sessionSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
-    
     sessionId: {
       type: String,
       required: true,
