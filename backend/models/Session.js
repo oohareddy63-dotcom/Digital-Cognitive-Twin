@@ -13,6 +13,7 @@ const sessionSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    
     scores: {
       memory: { type: Number, default: null },
       reaction: { type: Number, default: null },
