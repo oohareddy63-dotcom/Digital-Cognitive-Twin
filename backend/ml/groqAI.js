@@ -37,7 +37,6 @@ async function generatePersonalizedInsights(userData) {
   const metricsText = cognitiveMetrics
     .map((m) => `${m.name}: ${m.score ?? "N/A"} (baseline: ${m.baseline ?? "N/A"}, change: ${m.change > 0 ? "+" : ""}${m.change})`)
     .join(", ");
-
   const anomalyText = anomalyAlerts?.length
     ? anomalyAlerts.map((a) => `${a.testType} is ${a.severity} (z=${a.zScore}, ${a.direction} baseline)`).join("; ")
     : "No anomalies detected";
