@@ -40,7 +40,6 @@ async function generatePersonalizedInsights(userData) {
   const anomalyText = anomalyAlerts?.length
     ? anomalyAlerts.map((a) => `${a.testType} is ${a.severity} (z=${a.zScore}, ${a.direction} baseline)`).join("; ")
     : "No anomalies detected";
-
   const system = `You are CogTwin, an AI cognitive health assistant. You analyze brain health data and provide 
 concise, empathetic, actionable insights. Always be encouraging but honest. Keep each insight to 1-2 sentences.
 Respond ONLY with a JSON array of 3 insight objects with fields: type ("positive"|"warning"|"info"), title (max 6 words), description (1-2 sentences).`;
