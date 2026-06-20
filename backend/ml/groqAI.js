@@ -28,7 +28,6 @@ async function chat(systemPrompt, userPrompt, maxTokens = 512) {
     return null;
   }
 }
-
 // ─── 1. Generate personalized AI insights ────────────────────────────────────
 async function generatePersonalizedInsights(userData) {
   const {
