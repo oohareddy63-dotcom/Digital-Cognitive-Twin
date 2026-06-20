@@ -34,7 +34,6 @@ async function generatePersonalizedInsights(userData) {
     name, overallScore, baseline, cognitiveMetrics,
     trend, anomalyAlerts, sessionCount, daysSinceLastTest,
   } = userData;
-
   const metricsText = cognitiveMetrics
     .map((m) => `${m.name}: ${m.score ?? "N/A"} (baseline: ${m.baseline ?? "N/A"}, change: ${m.change > 0 ? "+" : ""}${m.change})`)
     .join(", ");
