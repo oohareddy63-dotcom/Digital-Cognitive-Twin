@@ -4,6 +4,8 @@
  *  - Personalized cognitive health insights
  *  - Smart recommendations
  *  - Anomaly explanations
+
+ 
  *  - Weekly report summaries
  */
 const Groq = require("groq-sdk");
