@@ -4,7 +4,6 @@
  *  - Personalized cognitive health insights
  *  - Smart recommendations
  *  - Anomaly explanations
-
  
  *  - Weekly report summaries
  */
