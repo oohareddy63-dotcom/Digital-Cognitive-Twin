@@ -54,6 +54,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(apiUserToUser(u));
         setBackendOnline(true);
       })
+      
       .catch((err: Error) => {
         // If backend is unreachable, keep the cached user from localStorage
         if (err.message.includes("Cannot connect") || err.message.includes("timed out")) {
