@@ -25,7 +25,6 @@ export const useAuth = () => {
   if (!ctx) throw new Error("useAuth must be used within AuthProvider");
   return ctx;
 };
-
 function apiUserToUser(u: ApiUser): User {
   return {
     id: u.id,
