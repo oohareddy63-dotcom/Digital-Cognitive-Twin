@@ -13,7 +13,6 @@ const Navbar = () => {
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const notifRef = useRef<HTMLDivElement>(null);
-
   const navLinks = isAuthenticated
     ? [
         { to: "/dashboard", label: "Dashboard" },
