@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { Brain, Menu, X, LogOut, Bell, AlertTriangle, CheckCircle, Info, Clock } from "lucide-react";
 import { notificationsApi, type AppNotification } from "@/lib/api";
+
 const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
   const location  = useLocation();
