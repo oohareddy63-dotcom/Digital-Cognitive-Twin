@@ -22,7 +22,6 @@ function getModels() {
       actionUrl: { type: String, default: "/tests" },
     }, { timestamps: true }));
 }
-
 // ─── Check and send reminders ─────────────────────────────────────────────────
 async function checkAndSendReminders() {
   try {
