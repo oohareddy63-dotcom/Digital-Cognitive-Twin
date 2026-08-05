@@ -3,7 +3,6 @@ import { authApi, type ApiUser } from "@/lib/api";
 export interface User {
   id: string;
   name: string;
-  
   email: string;
   avatar?: string;
   joinedDate: string;
