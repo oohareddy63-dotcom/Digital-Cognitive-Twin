@@ -9,6 +9,7 @@ export interface User {
   baseline?: ApiUser["baseline"];
   streak?: ApiUser["streak"];
 }
+
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
