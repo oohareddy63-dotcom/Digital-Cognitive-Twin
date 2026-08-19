@@ -6,6 +6,7 @@
  *  - Anomaly explanations
  *  - Weekly report summaries
  */
+
 const Groq = require("groq-sdk");
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const MODEL = "llama-3.1-8b-instant";
